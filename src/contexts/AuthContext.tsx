@@ -6,7 +6,7 @@ interface AuthContextType {
   user: User | null;
   session: Session | null;
   loading: boolean;
-  signUp: (email: string, password: string) => Promise<{ error: any }>;
+  signUp: (email: string, password: string, displayName?: string) => Promise<{ error: any }>;
   signIn: (email: string, password: string) => Promise<{ error: any }>;
   signOut: () => Promise<void>;
 }
@@ -32,15 +32,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
         if (session?.user) {
           const { error } = await supabase
-            .from('profiles')
+            .from('user_preferences')
             .upsert({
-              id: session.user.id,
+              user_id: session.user.id,
               updated_at: new Date().toISOString(),
             }, {
-              onConflict: 'id'
+              onConflict: 'user_id'
             });
 
-          if (error) console.error('Error upserting profile:', error);
+          if (error) console.error('Error upserting preferences:', error);
         }
       })();
     });
@@ -48,10 +48,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return () => subscription.unsubscribe();
   }, []);
 
-  const signUp = async (email: string, password: string) => {
+  const signUp = async (email: string, password: string, displayName?: string) => {
     const { error } = await supabase.auth.signUp({
       email,
       password,
+      options: {
+        data: {
+          display_name: displayName || email.split('@')[0],
+        }
+      }
     });
     return { error };
   };

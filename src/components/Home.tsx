@@ -1,119 +1,106 @@
-import { Shield, FileText, Phone, Lock, Heart, BookOpen } from 'lucide-react';
+import { Play, Heart, Flame } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 interface HomeProps {
   onNavigate: (page: string) => void;
+  onPlaySong?: (songId: string) => void;
 }
 
-export default function Home({ onNavigate }: HomeProps) {
+export default function Home({ onNavigate, onPlaySong }: HomeProps) {
   const { t } = useLanguage();
 
+  const mockTrending = [
+    { id: '1', title: 'Midnight Dreams', artist: 'Luna Echo', plays: 234000 },
+    { id: '2', title: 'Ocean Waves', artist: 'Coastal Band', plays: 189000 },
+    { id: '3', title: 'Urban Pulse', artist: 'City Lights', plays: 156000 },
+  ];
+
+  const mockGenres = [
+    { name: 'Regional', icon: '🌍', color: 'from-orange-500 to-red-500' },
+    { name: 'Classical', icon: '🎻', color: 'from-purple-500 to-pink-500' },
+    { name: 'Devotional', icon: '🙏', color: 'from-green-500 to-emerald-500' },
+    { name: 'Modern', icon: '🎵', color: 'from-blue-500 to-cyan-500' },
+    { name: 'Pop', icon: '⭐', color: 'from-yellow-500 to-orange-500' },
+    { name: 'Rock', icon: '🎸', color: 'from-red-500 to-pink-500' },
+  ];
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-teal-50 to-white">
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black text-white pb-40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <section className="py-16 md:py-24">
-          <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-              {t.hero.title}
+        <section className="py-12">
+          <div className="text-center mb-12">
+            <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-blue-400 via-teal-400 to-green-400 bg-clip-text text-transparent mb-4">
+              {t.home.welcome}
             </h1>
-            <p className="text-lg md:text-xl text-gray-600 mb-10 leading-relaxed">
-              {t.hero.subtitle}
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button
-                onClick={() => onNavigate('report')}
-                className="px-6 py-3 bg-teal-600 text-white font-medium rounded-lg hover:bg-teal-700 transition-all duration-200 shadow-md hover:shadow-lg"
-              >
-                {t.hero.ctaReport}
-              </button>
-              <button
-                onClick={() => onNavigate('sos')}
-                className="px-6 py-3 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 transition-all duration-200 shadow-md hover:shadow-lg"
-              >
-                {t.hero.ctaSOS}
-              </button>
-              <button
-                onClick={() => onNavigate('resources')}
-                className="px-6 py-3 bg-white text-teal-600 font-medium rounded-lg hover:bg-gray-50 transition-all duration-200 border-2 border-teal-600"
-              >
-                {t.hero.ctaResources}
-              </button>
-            </div>
-          </div>
-        </section>
-
-        <section className="py-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12">
-            {t.features.title}
-          </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-200 border border-gray-100">
-              <div className="bg-teal-100 w-14 h-14 rounded-lg flex items-center justify-center mb-4">
-                <FileText className="h-7 w-7 text-teal-600" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                {t.features.anonymous.title}
-              </h3>
-              <p className="text-gray-600 leading-relaxed">
-                {t.features.anonymous.description}
-              </p>
-            </div>
-
-            <div className="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-200 border border-gray-100">
-              <div className="bg-red-100 w-14 h-14 rounded-lg flex items-center justify-center mb-4">
-                <Phone className="h-7 w-7 text-red-600" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                {t.features.sos.title}
-              </h3>
-              <p className="text-gray-600 leading-relaxed">
-                {t.features.sos.description}
-              </p>
-            </div>
-
-            <div className="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-200 border border-gray-100">
-              <div className="bg-blue-100 w-14 h-14 rounded-lg flex items-center justify-center mb-4">
-                <BookOpen className="h-7 w-7 text-blue-600" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                {t.features.resources.title}
-              </h3>
-              <p className="text-gray-600 leading-relaxed">
-                {t.features.resources.description}
-              </p>
-            </div>
-
-            <div className="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-200 border border-gray-100">
-              <div className="bg-green-100 w-14 h-14 rounded-lg flex items-center justify-center mb-4">
-                <Lock className="h-7 w-7 text-green-600" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                {t.features.privacy.title}
-              </h3>
-              <p className="text-gray-600 leading-relaxed">
-                {t.features.privacy.description}
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <section className="py-16 mb-16">
-          <div className="bg-gradient-to-r from-teal-600 to-teal-700 rounded-2xl p-10 md:p-14 text-center shadow-xl">
-            <Heart className="h-12 w-12 text-white mx-auto mb-4" />
-            <h2 className="text-3xl font-bold text-white mb-4">
-              You Are Not Alone
-            </h2>
-            <p className="text-teal-50 text-lg mb-6 max-w-2xl mx-auto leading-relaxed">
-              We are committed to providing a safe, confidential space where you can access support,
-              resources, and emergency assistance whenever you need it.
+            <p className="text-xl text-gray-400 max-w-2xl mx-auto mb-8">
+              Ad-free music streaming. High quality audio. All languages. Play offline.
             </p>
             <button
-              onClick={() => onNavigate('resources')}
-              className="px-8 py-3 bg-white text-teal-600 font-medium rounded-lg hover:bg-teal-50 transition-all duration-200 shadow-md"
+              onClick={() => onNavigate('search')}
+              className="px-8 py-3 bg-gradient-to-r from-blue-500 to-teal-400 text-white font-semibold rounded-full hover:shadow-lg transition-all"
             >
-              Explore Support Resources
+              Start Exploring
             </button>
           </div>
+        </section>
+
+        <section className="mb-16">
+          <div className="flex items-center gap-3 mb-6">
+            <Flame className="h-6 w-6 text-orange-500" />
+            <h2 className="text-2xl font-bold">{t.home.trending}</h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {mockTrending.map((song) => (
+              <div
+                key={song.id}
+                className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg p-6 hover:shadow-lg transition-all hover:scale-105 group"
+              >
+                <div className="flex items-start justify-between mb-4">
+                  <div>
+                    <p className="text-gray-400 text-sm">{song.plays.toLocaleString()} plays</p>
+                  </div>
+                  <button
+                    onClick={() => onPlaySong?.(song.id)}
+                    className="p-3 bg-gradient-to-r from-blue-500 to-teal-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                  >
+                    <Play className="h-5 w-5 text-white fill-white" />
+                  </button>
+                </div>
+                <p className="text-lg font-semibold mb-1">{song.title}</p>
+                <p className="text-gray-400">{song.artist}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="mb-16">
+          <h2 className="text-2xl font-bold mb-6">{t.home.genres}</h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            {mockGenres.map((genre) => (
+              <button
+                key={genre.name}
+                onClick={() => onNavigate('search')}
+                className={`bg-gradient-to-br ${genre.color} rounded-lg p-6 text-center font-semibold hover:shadow-lg transition-all hover:scale-105 text-white`}
+              >
+                <div className="text-3xl mb-2">{genre.icon}</div>
+                <p>{genre.name}</p>
+              </button>
+            ))}
+          </div>
+        </section>
+
+        <section className="bg-gradient-to-r from-blue-600 to-teal-500 rounded-2xl p-8 md:p-12 text-center">
+          <Heart className="h-12 w-12 mx-auto mb-4" />
+          <h2 className="text-3xl font-bold mb-4">Premium Experience</h2>
+          <p className="text-lg mb-6 opacity-90 max-w-2xl mx-auto">
+            High-quality audio streams, offline downloads, personalized recommendations, and ad-free listening all in one place.
+          </p>
+          <button
+            onClick={() => onNavigate('auth')}
+            className="px-8 py-3 bg-white text-blue-600 font-semibold rounded-full hover:shadow-lg transition-all"
+          >
+            Create Account
+          </button>
         </section>
       </div>
     </div>

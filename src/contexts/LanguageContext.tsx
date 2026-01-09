@@ -1,32 +1,32 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { translations, Language } from '../lib/translations';
+import { musicTranslations, MusicLanguage } from '../lib/music-translations';
 
 interface LanguageContextType {
-  language: Language;
-  setLanguage: (lang: Language) => void;
-  t: typeof translations.en;
+  language: MusicLanguage;
+  setLanguage: (lang: MusicLanguage) => void;
+  t: typeof musicTranslations.en;
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguageState] = useState<Language>(() => {
-    const saved = localStorage.getItem('language');
-    return (saved as Language) || 'en';
+  const [language, setLanguageState] = useState<MusicLanguage>(() => {
+    const saved = localStorage.getItem('musicLanguage');
+    return (saved as MusicLanguage) || 'en';
   });
 
   useEffect(() => {
-    localStorage.setItem('language', language);
+    localStorage.setItem('musicLanguage', language);
   }, [language]);
 
-  const setLanguage = (lang: Language) => {
+  const setLanguage = (lang: MusicLanguage) => {
     setLanguageState(lang);
   };
 
   const value = {
     language,
     setLanguage,
-    t: translations[language],
+    t: musicTranslations[language],
   };
 
   return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>;

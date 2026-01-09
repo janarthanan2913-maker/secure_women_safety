@@ -1,4 +1,4 @@
-import { Shield, Menu, X, Globe } from 'lucide-react';
+import { Music, Search, Library, List, Download, Settings, LogOut, LogIn, Menu, X, Globe } from 'lucide-react';
 import { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -22,74 +22,83 @@ export default function Navigation({ currentPage, onNavigate }: NavigationProps)
   const languages = [
     { code: 'en', name: 'English' },
     { code: 'es', name: 'Español' },
-    { code: 'fr', name: 'Français' },
+    { code: 'hi', name: 'हिन्दी' },
   ];
 
   return (
-    <nav className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+    <nav className="bg-gradient-to-r from-gray-900 to-gray-800 border-b border-gray-700 sticky top-0 z-40 shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center gap-3 cursor-pointer" onClick={() => onNavigate('home')}>
-            <div className="bg-teal-600 p-2 rounded-lg">
-              <Shield className="h-6 w-6 text-white" />
+            <div className="bg-gradient-to-r from-blue-500 to-teal-400 p-2 rounded-lg">
+              <Music className="h-6 w-6 text-white" />
             </div>
-            <span className="text-xl font-semibold text-gray-900">SafeSpace</span>
+            <span className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-teal-300 bg-clip-text text-transparent">
+              Rhythm
+            </span>
           </div>
 
           <div className="hidden md:flex items-center gap-6">
             <button
               onClick={() => onNavigate('home')}
-              className={`text-sm font-medium transition-colors ${
-                currentPage === 'home' ? 'text-teal-600' : 'text-gray-700 hover:text-teal-600'
+              className={`text-sm font-medium transition-colors flex items-center gap-2 ${
+                currentPage === 'home' ? 'text-blue-400' : 'text-gray-300 hover:text-white'
               }`}
             >
-              {t.nav.home}
+              <Music className="h-4 w-4" />
+              Home
             </button>
             <button
-              onClick={() => onNavigate('resources')}
-              className={`text-sm font-medium transition-colors ${
-                currentPage === 'resources' ? 'text-teal-600' : 'text-gray-700 hover:text-teal-600'
+              onClick={() => onNavigate('search')}
+              className={`text-sm font-medium transition-colors flex items-center gap-2 ${
+                currentPage === 'search' ? 'text-blue-400' : 'text-gray-300 hover:text-white'
               }`}
             >
-              {t.nav.resources}
-            </button>
-            <button
-              onClick={() => onNavigate('report')}
-              className={`text-sm font-medium transition-colors ${
-                currentPage === 'report' ? 'text-teal-600' : 'text-gray-700 hover:text-teal-600'
-              }`}
-            >
-              {t.nav.report}
-            </button>
-            <button
-              onClick={() => onNavigate('sos')}
-              className={`text-sm font-medium transition-colors ${
-                currentPage === 'sos' ? 'text-red-600' : 'text-gray-700 hover:text-red-600'
-              }`}
-            >
-              {t.nav.sos}
+              <Search className="h-4 w-4" />
+              {t.nav.search}
             </button>
             {user && (
-              <button
-                onClick={() => onNavigate('dashboard')}
-                className={`text-sm font-medium transition-colors ${
-                  currentPage === 'dashboard' ? 'text-teal-600' : 'text-gray-700 hover:text-teal-600'
-                }`}
-              >
-                {t.nav.dashboard}
-              </button>
+              <>
+                <button
+                  onClick={() => onNavigate('library')}
+                  className={`text-sm font-medium transition-colors flex items-center gap-2 ${
+                    currentPage === 'library' ? 'text-blue-400' : 'text-gray-300 hover:text-white'
+                  }`}
+                >
+                  <Library className="h-4 w-4" />
+                  {t.nav.library}
+                </button>
+                <button
+                  onClick={() => onNavigate('playlists')}
+                  className={`text-sm font-medium transition-colors flex items-center gap-2 ${
+                    currentPage === 'playlists' ? 'text-blue-400' : 'text-gray-300 hover:text-white'
+                  }`}
+                >
+                  <List className="h-4 w-4" />
+                  {t.nav.playlists}
+                </button>
+                <button
+                  onClick={() => onNavigate('downloads')}
+                  className={`text-sm font-medium transition-colors flex items-center gap-2 ${
+                    currentPage === 'downloads' ? 'text-blue-400' : 'text-gray-300 hover:text-white'
+                  }`}
+                >
+                  <Download className="h-4 w-4" />
+                  {t.nav.downloads}
+                </button>
+              </>
             )}
 
             <div className="relative">
               <button
                 onClick={() => setLanguageMenuOpen(!languageMenuOpen)}
-                className="flex items-center gap-1 text-sm font-medium text-gray-700 hover:text-teal-600 transition-colors"
+                className="flex items-center gap-1 text-sm font-medium text-gray-300 hover:text-white transition-colors"
               >
                 <Globe className="h-4 w-4" />
                 {language.toUpperCase()}
               </button>
               {languageMenuOpen && (
-                <div className="absolute right-0 mt-2 w-36 bg-white rounded-lg shadow-lg border border-gray-200 py-1">
+                <div className="absolute right-0 mt-2 w-36 bg-gray-800 rounded-lg shadow-lg border border-gray-700 py-1">
                   {languages.map((lang) => (
                     <button
                       key={lang.code}
@@ -97,8 +106,8 @@ export default function Navigation({ currentPage, onNavigate }: NavigationProps)
                         setLanguage(lang.code as any);
                         setLanguageMenuOpen(false);
                       }}
-                      className={`w-full text-left px-4 py-2 text-sm hover:bg-gray-50 transition-colors ${
-                        language === lang.code ? 'text-teal-600 font-medium' : 'text-gray-700'
+                      className={`w-full text-left px-4 py-2 text-sm hover:bg-gray-700 transition-colors ${
+                        language === lang.code ? 'text-blue-400 font-medium' : 'text-gray-300'
                       }`}
                     >
                       {lang.name}
@@ -108,17 +117,27 @@ export default function Navigation({ currentPage, onNavigate }: NavigationProps)
               )}
             </div>
 
+            <button
+              onClick={() => onNavigate('settings')}
+              className={`text-sm font-medium transition-colors flex items-center gap-2 ${
+                currentPage === 'settings' ? 'text-blue-400' : 'text-gray-300 hover:text-white'
+              }`}
+            >
+              <Settings className="h-4 w-4" />
+            </button>
+
             {user ? (
               <button
                 onClick={handleSignOut}
-                className="text-sm font-medium text-gray-700 hover:text-teal-600 transition-colors"
+                className="text-sm font-medium text-gray-300 hover:text-white transition-colors flex items-center gap-2"
               >
+                <LogOut className="h-4 w-4" />
                 {t.nav.signOut}
               </button>
             ) : (
               <button
                 onClick={() => onNavigate('auth')}
-                className="px-4 py-2 bg-teal-600 text-white text-sm font-medium rounded-lg hover:bg-teal-700 transition-colors"
+                className="px-4 py-2 bg-gradient-to-r from-blue-500 to-teal-400 text-white text-sm font-medium rounded-lg hover:shadow-lg transition-all"
               >
                 {t.nav.signIn}
               </button>
@@ -127,7 +146,7 @@ export default function Navigation({ currentPage, onNavigate }: NavigationProps)
 
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+            className="md:hidden p-2 text-gray-300 hover:text-white transition-colors"
           >
             {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
@@ -135,59 +154,61 @@ export default function Navigation({ currentPage, onNavigate }: NavigationProps)
       </div>
 
       {mobileMenuOpen && (
-        <div className="md:hidden bg-white border-t border-gray-200">
+        <div className="md:hidden bg-gray-900 border-t border-gray-700">
           <div className="px-4 py-3 space-y-3">
             <button
               onClick={() => {
                 onNavigate('home');
                 setMobileMenuOpen(false);
               }}
-              className="block w-full text-left text-sm font-medium text-gray-700 hover:text-teal-600"
+              className="block w-full text-left text-sm font-medium text-gray-300 hover:text-white"
             >
-              {t.nav.home}
+              Home
             </button>
             <button
               onClick={() => {
-                onNavigate('resources');
+                onNavigate('search');
                 setMobileMenuOpen(false);
               }}
-              className="block w-full text-left text-sm font-medium text-gray-700 hover:text-teal-600"
+              className="block w-full text-left text-sm font-medium text-gray-300 hover:text-white"
             >
-              {t.nav.resources}
-            </button>
-            <button
-              onClick={() => {
-                onNavigate('report');
-                setMobileMenuOpen(false);
-              }}
-              className="block w-full text-left text-sm font-medium text-gray-700 hover:text-teal-600"
-            >
-              {t.nav.report}
-            </button>
-            <button
-              onClick={() => {
-                onNavigate('sos');
-                setMobileMenuOpen(false);
-              }}
-              className="block w-full text-left text-sm font-medium text-red-600 hover:text-red-700"
-            >
-              {t.nav.sos}
+              {t.nav.search}
             </button>
             {user && (
-              <button
-                onClick={() => {
-                  onNavigate('dashboard');
-                  setMobileMenuOpen(false);
-                }}
-                className="block w-full text-left text-sm font-medium text-gray-700 hover:text-teal-600"
-              >
-                {t.nav.dashboard}
-              </button>
+              <>
+                <button
+                  onClick={() => {
+                    onNavigate('library');
+                    setMobileMenuOpen(false);
+                  }}
+                  className="block w-full text-left text-sm font-medium text-gray-300 hover:text-white"
+                >
+                  {t.nav.library}
+                </button>
+                <button
+                  onClick={() => {
+                    onNavigate('playlists');
+                    setMobileMenuOpen(false);
+                  }}
+                  className="block w-full text-left text-sm font-medium text-gray-300 hover:text-white"
+                >
+                  {t.nav.playlists}
+                </button>
+                <button
+                  onClick={() => {
+                    onNavigate('downloads');
+                    setMobileMenuOpen(false);
+                  }}
+                  className="block w-full text-left text-sm font-medium text-gray-300 hover:text-white"
+                >
+                  {t.nav.downloads}
+                </button>
+              </>
             )}
-            <div className="pt-3 border-t border-gray-200">
+            <div className="pt-3 border-t border-gray-700">
               <div className="flex items-center gap-2 mb-3">
-                <Globe className="h-4 w-4 text-gray-700" />
-                <span className="text-sm font-medium text-gray-700">Language</span>
+                <Globe className="h-4 w-4 text-gray-400" />
+                <span className="text-sm font-medium text-gray-300">Language</span>
               </div>
               {languages.map((lang) => (
                 <button
@@ -198,8 +219,8 @@ export default function Navigation({ currentPage, onNavigate }: NavigationProps)
                   }}
                   className={`block w-full text-left px-4 py-2 text-sm rounded ${
                     language === lang.code
-                      ? 'bg-teal-50 text-teal-600 font-medium'
-                      : 'text-gray-700 hover:bg-gray-50'
+                      ? 'bg-blue-500 text-white font-medium'
+                      : 'text-gray-300 hover:bg-gray-800'
                   }`}
                 >
                   {lang.name}
@@ -212,7 +233,7 @@ export default function Navigation({ currentPage, onNavigate }: NavigationProps)
                   handleSignOut();
                   setMobileMenuOpen(false);
                 }}
-                className="block w-full text-left text-sm font-medium text-gray-700 hover:text-teal-600 pt-3 border-t border-gray-200"
+                className="block w-full text-left text-sm font-medium text-gray-300 hover:text-white pt-3 border-t border-gray-700"
               >
                 {t.nav.signOut}
               </button>
@@ -222,7 +243,7 @@ export default function Navigation({ currentPage, onNavigate }: NavigationProps)
                   onNavigate('auth');
                   setMobileMenuOpen(false);
                 }}
-                className="w-full px-4 py-2 bg-teal-600 text-white text-sm font-medium rounded-lg hover:bg-teal-700"
+                className="w-full px-4 py-2 bg-gradient-to-r from-blue-500 to-teal-400 text-white text-sm font-medium rounded-lg mt-3"
               >
                 {t.nav.signIn}
               </button>
